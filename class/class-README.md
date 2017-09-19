@@ -214,3 +214,62 @@ public function add(int $value1, int $value2)
     return $value1 + $value2;
 }
 ```
+
+## 類別屬性資料若很重要，不能被外部隨便異動，需要設定為 protected / private 屬性
+
+*錯誤示範：*
+
+```php
+class BankAccount
+{
+    public $balance = 1000;
+}
+
+$bankAccount = new BankAccount();
+
+// 付款
+$bankAccount->balance -= 100;
+```
+
+**正確示範：**
+
+```php
+class BankAccount
+{
+    private $balance;
+
+    public function __construct(int $balance = 1000)
+    {
+      $this->balance = $balance;
+    }
+
+    public function withdrawBalance(int $amount): void
+    {
+        if ($amount > $this->balance) {
+            throw new \Exception('付款金額高於可用餘額');
+        }
+
+        $this->balance -= $amount;
+    }
+
+    public function depositBalance(int $amount): void
+    {
+        $this->balance += $amount;
+    }
+
+    public function getBalance(): int
+    {
+        return $this->balance;
+    }
+}
+
+$bankAccount = new BankAccount();
+
+// 付款
+$bankAccount->withdrawBalance($shoesPrice);
+
+// 取得餘額
+$balance = $bankAccount->getBalance();
+```
+
+類別屬性資料盡量設定為 `private` 或 `protected` 屬性
