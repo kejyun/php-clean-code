@@ -1,0 +1,12 @@
+{
+  "plugins": ["adsense"],
+  "pluginsConfig": {
+    "adsense": {
+        "client": "ca-pub-1990193713845546",
+        "slot": "8019552255",
+        "format": "auto",
+        "element": ".page-inner section",
+        "position": "top"
+    }
+  }
+}
